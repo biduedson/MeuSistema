@@ -1,0 +1,6 @@
+services:
+  meusistema.api:
+    image: ${DOCKER_REGISTRY-}meusistemaapi
+    build:
+      context: .
+      dockerfile: MeuSistema.API/Dockerfile

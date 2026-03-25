@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+  <Project Path="MeuSistema.API/MeuSistema.API.csproj" Id="3f16d549-0c3b-49e5-ba96-3a1858ca9dc8" />
+  <Project Path="MeuSistema.Application/MeuSistema.Application.csproj" />
+  <Project Path="MeuSistema.Domain/MeuSistema.Domain.csproj" />
+  <Project Path="MeuSistema.Infrastructure/MeuSistema.Infrastructure.csproj" />
+  <Project Path="MeuSistema.Tests/MeuSistema.Tests.csproj" Id="42558270-2ae7-48a2-864a-16f95ebd0c28" />
+</Solution>
