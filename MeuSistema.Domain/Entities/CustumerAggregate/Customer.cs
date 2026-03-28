@@ -1,5 +1,6 @@
 
 using MeuSistema.Domain.Entities.CustumerAggregate.Events;
+using MeuSistema.Domain.Shared.Exceptions;
 using MeuSistema.Domain.Shared.Primitives;
 using MeuSistema.Domain.ValueObjects;
 
@@ -28,13 +29,19 @@ public class Customer : BaseEntity, IAggregateRoot
     public Email Email { get; private set; }
     public DateTime DateOfBirth { get; }
 
-    public void ChangeEmail(Email newEmail)
+    public void ChangeEmail(string newEmail)
     {
-        if (Email.Equals(newEmail)) return;
-        Email = newEmail;
-        AddDomainEvent(new CustomerUpdatedEvent(Id, FirstName,LastName,Gender, newEmail.Address, DateOfBirth));
-    }
+        if (Email.Address.Equals(newEmail, StringComparison.OrdinalIgnoreCase)) return;
 
+        var emailResult = Email.Create(newEmail);
+
+        if (!emailResult.IsSuccess)
+            throw new ValidationException(emailResult.Error!);
+
+        Email = emailResult.Value!;
+
+        AddDomainEvent(new CustomerUpdatedEvent(Id, FirstName, LastName, Gender, Email.Address, DateOfBirth));
+    }
     public void Delete()
     {
         if (_isDeleted) return;
