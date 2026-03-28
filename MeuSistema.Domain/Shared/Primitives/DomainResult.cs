@@ -2,7 +2,7 @@
 
 namespace MeuSistema.Domain.Shared.Primitives;
 
-internal sealed class DomainResult<T> 
+public sealed class DomainResult<T> 
 {
     public T? Value { get; }
     public string? Error { get; }
