@@ -28,7 +28,7 @@ public abstract class CustomerBaseEvent : BaseEvent
     public string LastName { get; private init; }
     public EGender Gender { get; private init; }
     public string Email { get; private init; }  
-    public DateTime DateOfBirth { get; private init};
+    public DateTime DateOfBirth { get; private init; }
 }
 
 
