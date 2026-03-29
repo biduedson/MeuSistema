@@ -1,8 +1,7 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MeuSistema.Application.Persistence;
+namespace MeuSistema.Application.Interfaces.Persistence;
 
 public interface IUnitOfWork : IAsyncDisposable
 {
