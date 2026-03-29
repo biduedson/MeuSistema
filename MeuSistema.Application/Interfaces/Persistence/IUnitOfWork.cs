@@ -1,9 +1,8 @@
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace MeuSistema.Application.Interfaces.Persistence;
 
-public interface IUnitOfWork : IAsyncDisposable
+public interface IUnitOfWork : IDisposable
 {
-    Task SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task  SaveChangesAsync();
 }
