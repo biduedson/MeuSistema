@@ -12,6 +12,7 @@ public interface IRepository<TEntity, in TKey> : IDisposable
     void Update(TEntity entity);
     void Remove(TEntity entity);
     Task<TEntity> GetByIdAsync(TKey id);
+    Task<IEnumerable<TEntity>> GetAllAsync();
 }
 
 /*
