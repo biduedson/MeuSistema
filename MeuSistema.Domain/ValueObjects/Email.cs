@@ -1,6 +1,6 @@
 
 using MeuSistema.Domain.Shared;
-using MeuSistema.Domain.Shared.Primitives;
+using MeuSistema.Domain.Exceptions;
 
 namespace MeuSistema.Domain.ValueObjects;
 
@@ -12,14 +12,15 @@ public sealed record Email
     public Email () { }
     public string Address { get; }
 
-    public static DomainResult<Email> Create(string emailAddress)
+    public static Email Create(string emailAddress)
     {
         if (string.IsNullOrWhiteSpace(emailAddress))
-            return DomainResult<Email>.Failure("O email é obrigatório.");
+            throw new ValidationException("O email é obrigatório.");
 
-        return !RegexPatterns.EmailIsValid.IsMatch(emailAddress)
-               ?DomainResult<Email>.Failure("O email é inválido.")  
-               :DomainResult<Email>.Success(new Email(emailAddress));
+        if (!RegexPatterns.EmailIsValid.IsMatch(emailAddress))
+            throw new ValidationException("O email é inválido.");
+
+        return new Email(emailAddress);
     }
 
     public override string ToString() => Address;
