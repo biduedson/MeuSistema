@@ -1,6 +1,4 @@
-﻿
-
-namespace MeuSistema.Domain.Shared.Exceptions;
+namespace MeuSistema.Domain.Exceptions;
 
 public sealed class ValidationException(string message) : DomainException(message)
 {

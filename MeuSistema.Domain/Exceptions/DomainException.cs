@@ -1,6 +1,6 @@
-﻿
+using System;
 
-namespace MeuSistema.Domain.Shared.Exceptions;
+namespace MeuSistema.Domain.Exceptions;
 
 public abstract class DomainException(string message) : Exception(message)
 {
