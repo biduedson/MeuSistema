@@ -1,4 +1,6 @@
+using System.Text.Json.Serialization;
 using MeuSistema.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
 
 namespace MeuSistema.API
@@ -8,7 +10,11 @@ namespace MeuSistema.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            builder.Services
+            .Configure<JsonOptions>(jsonOptions =>
+            {
+            jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
             builder.Services.AddControllers();
             builder.Services.AddInfrastructure(builder.Configuration);
             builder.Services.AddOpenApi();

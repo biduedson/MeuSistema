@@ -10,7 +10,7 @@ public class Customer : BaseEntity, IAggregateRoot
 {
 
     private bool _isDeleted;
-    public Customer(string firstName, string lastName, EGender gender, Email email, DateTime dateOfBirth)
+    private Customer(string firstName, string lastName, EGender gender, Email email, DateTime dateOfBirth)
     {
         FirstName = firstName;
         LastName = lastName;
@@ -29,11 +29,21 @@ public class Customer : BaseEntity, IAggregateRoot
     public Email Email { get; private set; }
     public DateTime DateOfBirth { get; }
 
+
+    public static Customer Create(string firstName, string lastName, EGender gender, string email, DateTime dateOfBirth)
+    {
+        if(string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+            throw new ValidationException("First name and last name cannot be empty.");
+
+        var emailCreated =  Email.Create(email);
+
+        return new Customer(firstName, lastName, gender, emailCreated, dateOfBirth);
+    }
     public void ChangeEmail(string newEmail)
     {
         if (Email.Address.Equals(newEmail, StringComparison.OrdinalIgnoreCase)) return;
 
-        // Email.Create now throws a ValidationException on invalid input
+        
         Email = Email.Create(newEmail);
 
         AddDomainEvent(new CustomerUpdatedEvent(Id, FirstName, LastName, Gender, Email.Address, DateOfBirth));
