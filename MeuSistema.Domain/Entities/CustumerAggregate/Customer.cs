@@ -1,6 +1,6 @@
 
 using MeuSistema.Domain.Entities.CustumerAggregate.Events;
-using MeuSistema.Domain.Shared.Exceptions;
+using MeuSistema.Domain.Exceptions;
 using MeuSistema.Domain.Shared.Primitives;
 using MeuSistema.Domain.ValueObjects;
 
