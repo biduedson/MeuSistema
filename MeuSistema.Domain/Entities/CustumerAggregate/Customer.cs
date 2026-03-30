@@ -33,12 +33,8 @@ public class Customer : BaseEntity, IAggregateRoot
     {
         if (Email.Address.Equals(newEmail, StringComparison.OrdinalIgnoreCase)) return;
 
-        var emailResult = Email.Create(newEmail);
-
-        if (!emailResult.IsSuccess)
-            throw new ValidationException(emailResult.Error!);
-
-        Email = emailResult.Value!;
+        // Email.Create now throws a ValidationException on invalid input
+        Email = Email.Create(newEmail);
 
         AddDomainEvent(new CustomerUpdatedEvent(Id, FirstName, LastName, Gender, Email.Address, DateOfBirth));
     }
