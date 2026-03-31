@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeuSistema.Infrastructure.Data.Context;
 
-public class CustomerDbContext(DbContextOptions<CustomerDbContext> dbOptions)
-    : BaseDbContext<CustomerDbContext>(dbOptions)
+public class AppDbContext(DbContextOptions<AppDbContext> dbOptions)
+    : BaseDbContext<AppDbContext>(dbOptions)
 {
     public DbSet<Customer> Customers => Set<Customer>();
 

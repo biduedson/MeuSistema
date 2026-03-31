@@ -19,8 +19,4 @@
     <ProjectReference Include="..\MeuSistema.Domain\MeuSistema.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Repositories\" />
-  </ItemGroup>
-
 </Project>

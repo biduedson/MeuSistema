@@ -16,7 +16,9 @@ namespace MeuSistema.API
             jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
             builder.Services.AddControllers();
-            builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddInfrastructureConfiguration(builder.Configuration);
+            builder.Services.AddInfrastructure();
+            builder.Services.AddRepositories();
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
