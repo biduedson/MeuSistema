@@ -18,12 +18,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\MeuSistema.Application\MeuSistema.Application.csproj" />
-    <ProjectReference Include="..\..\MeuSistema.Domain\MeuSistema.Domain.csproj" />
+    <ProjectReference Include="..\MeuSistema.Application\MeuSistema.Application.csproj" />
+    <ProjectReference Include="..\MeuSistema.Domain\MeuSistema.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\Entities\CustomerAggregate\" />
   </ItemGroup>
 
 </Project>

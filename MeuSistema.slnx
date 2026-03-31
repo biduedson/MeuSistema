@@ -5,9 +5,10 @@
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
-  <Project Path="MeuSistema.API/MeuSistema.API.csproj" Id="3f16d549-0c3b-49e5-ba96-3a1858ca9dc8" />
-  <Project Path="MeuSistema.Application/MeuSistema.Application.csproj" />
-  <Project Path="MeuSistema.Domain/MeuSistema.Domain.csproj" />
-  <Project Path="MeuSistema.Infrastructure/MeuSistema.Infrastructure.csproj" />
-  <Project Path="MeuSistema.Tests/MeuSistema.Tests.csproj" Id="42558270-2ae7-48a2-864a-16f95ebd0c28" />
+  <Project Path="src/MeuSistema.API/MeuSistema.API.csproj" />
+  <Project Path="src/MeuSistema.Application/MeuSistema.Application.csproj" />
+  <Project Path="src/MeuSistema.Domain/MeuSistema.Domain.csproj" />
+  <Project Path="src/MeuSistema.Infrastructure/MeuSistema.Infrastructure.csproj" />
+  <Project Path="tests/MeuSistema.IntegrationTests/MeuSistema.IntegrationTests/MeuSistema.IntegrationTests.csproj" Id="4001fca2-ef85-4a84-b66d-45ed6fcfc2a6" />
+  <Project Path="tests/MeuSistema.UnitTests/MeuSistema.UnitTests/MeuSistema.UnitTests.csproj" Id="b0ed30c5-5b73-4ea8-b8a2-c353dd0f8a62" />
 </Solution>

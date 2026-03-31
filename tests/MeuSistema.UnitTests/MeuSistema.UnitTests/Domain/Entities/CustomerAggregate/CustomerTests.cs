@@ -1,10 +1,12 @@
+
+
 using Bogus;
 using FluentAssertions;
 using MeuSistema.Domain.Entities.CustumerAggregate;
 using MeuSistema.Domain.Entities.CustumerAggregate.Events;
 using MeuSistema.Domain.ValueObjects;
 
-namespace MeuSistema.UnitTests.Domain.Entities.CustomerAggregate;
+namespace  MeuSistema.UnitTests.Domain.Entities.CustomerAggregate;
 
 public class CustomerTests
 {

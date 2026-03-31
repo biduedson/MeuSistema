@@ -11,5 +11,12 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
+    <None Include="MeuSistema.Tests\MeuSistema.Tests.csproj" />
+    <None Include="MeuSistema.Tests\MeuSistema.Tests.csproj.Backup.tmp" />
+    <None Include="MeuSistema.Tests\UnitTest1.cs" />
+    <None Include="tests\MeuSistema.UnitTests\Domain\Entities\CustomerAggregate\CustomerTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="tests\MeuSistema.IntegrationTests\" />
   </ItemGroup>
 </Project>
