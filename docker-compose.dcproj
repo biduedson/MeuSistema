@@ -11,12 +11,8 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
-    <None Include="MeuSistema.Tests\MeuSistema.Tests.csproj" />
-    <None Include="MeuSistema.Tests\MeuSistema.Tests.csproj.Backup.tmp" />
-    <None Include="MeuSistema.Tests\UnitTest1.cs" />
-    <None Include="tests\MeuSistema.UnitTests\Domain\Entities\CustomerAggregate\CustomerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="tests\MeuSistema.IntegrationTests\" />
+    <!-- No test project files should be included here. Tests are located under /tests and are not part of the docker project. -->
   </ItemGroup>
 </Project>
