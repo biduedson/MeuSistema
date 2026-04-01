@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using MeuSistema.Domain.Shared.Primitives;
 using MeuSistema.Domain.ValueObjects;
+using MeuSistema.SharedKernel.Primitives;
 
 namespace MeuSistema.Domain.Entities.CustumerAggregate;
 

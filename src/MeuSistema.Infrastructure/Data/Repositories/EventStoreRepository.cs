@@ -1,5 +1,5 @@
-﻿using MeuSistema.Domain.Shared.Primitives;
-using MeuSistema.Infrastructure.Data.Context;
+﻿using MeuSistema.Infrastructure.Data.Context;
+using MeuSistema.SharedKernel.Primitives;
 using Microsoft.EntityFrameworkCore;
 
 namespace MeuSistema.Infrastructure.Data.Repositories;

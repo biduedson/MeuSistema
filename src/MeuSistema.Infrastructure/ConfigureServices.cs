@@ -1,10 +1,12 @@
 ﻿using MeuSistema.Domain.Entities.CustumerAggregate;
-using MeuSistema.Domain.Shared.Primitives;
-using MeuSistema.Infrastructure.Configurations;
 using MeuSistema.Infrastructure.Data.Context;
 using MeuSistema.Infrastructure.Data.Repositories;
+using MeuSistema.SharedKernel.AppSettings;
+using MeuSistema.SharedKernel.Primitives;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+namespace MeuSistema.Infrastructure;
 
 public static class ConfigureServices
 {

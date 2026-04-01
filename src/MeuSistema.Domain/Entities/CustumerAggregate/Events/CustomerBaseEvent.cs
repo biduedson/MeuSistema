@@ -1,5 +1,4 @@
-﻿
-using MeuSistema.Domain.Shared.Primitives;
+﻿using MeuSistema.SharedKernel.Primitives;
 
 namespace MeuSistema.Domain.Entities.CustumerAggregate.Events;
 

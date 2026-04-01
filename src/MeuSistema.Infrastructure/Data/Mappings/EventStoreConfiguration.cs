@@ -1,5 +1,4 @@
-﻿
-using MeuSistema.Domain.Shared.Primitives;
+﻿using MeuSistema.SharedKernel.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
