@@ -2,6 +2,7 @@
   <Folder Name="/Itens de Solução/">
     <File Path="copilot-instructions.md" />
   </Folder>
+  <Project Path="../MeuSistema.SharedKernel/MeuSistema.SharedKernel.csproj" Id="af0b9d98-81b1-46d8-8e2d-d228aedb8297" />
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>

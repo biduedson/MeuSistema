@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using MeuSistema.API.Extensions;
 using MeuSistema.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
@@ -15,11 +16,16 @@ namespace MeuSistema.API
             {
             jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-            builder.Services.AddControllers();
-            builder.Services.AddInfrastructureConfiguration(builder.Configuration);
-            builder.Services.AddInfrastructure();
-            builder.Services.AddRepositories();
+
             builder.Services.AddOpenApi();
+            builder.Services.AddControllers();
+
+           
+            // Adicionando os serviços da aplicação no ASP.NET Core DI.
+            builder.Services
+                .AddInfrastructure()
+                .AddRepositories()
+                .AddAppDbContext(builder.Environment);
 
             var app = builder.Build();
 

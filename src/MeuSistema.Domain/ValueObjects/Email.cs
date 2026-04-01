@@ -1,6 +1,6 @@
 
-using MeuSistema.Domain.Shared;
 using MeuSistema.Domain.Exceptions;
+using MeuSistema.SharedKernel;
 
 namespace MeuSistema.Domain.ValueObjects;
 

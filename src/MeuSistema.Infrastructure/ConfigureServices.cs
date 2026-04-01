@@ -11,13 +11,7 @@ namespace MeuSistema.Infrastructure;
 public static class ConfigureServices
 {
    
-    public static IServiceCollection AddInfrastructureConfiguration(
-        this IServiceCollection services,
-        IConfiguration configuration) =>
-   services.Configure<ConnectionOptions>(
-            configuration.GetSection(ConnectionOptions.ConfigSectionPath));
-    
- 
+   
     public static IServiceCollection AddInfrastructure(
         this IServiceCollection services) =>
         services
