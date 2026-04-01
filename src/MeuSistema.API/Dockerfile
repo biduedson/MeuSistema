@@ -15,6 +15,7 @@ WORKDIR /src
 COPY ["MeuSistema.API/MeuSistema.API.csproj", "MeuSistema.API/"]
 COPY ["MeuSistema.Application/MeuSistema.Application.csproj", "MeuSistema.Application/"]
 COPY ["MeuSistema.Domain/MeuSistema.Domain.csproj", "MeuSistema.Domain/"]
+COPY ["MeuSistema.SharedKernel/MeuSistema.SharedKernel.csproj", "MeuSistema.SharedKernel/"]
 COPY ["MeuSistema.Infrastructure/MeuSistema.Infrastructure.csproj", "MeuSistema.Infrastructure/"]
 RUN dotnet restore "./MeuSistema.API/MeuSistema.API.csproj"
 COPY . .
