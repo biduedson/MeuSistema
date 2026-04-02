@@ -2,12 +2,12 @@
   <Folder Name="/Itens de Solução/">
     <File Path="copilot-instructions.md" />
   </Folder>
-  <Project Path="../MeuSistema.SharedKernel/MeuSistema.SharedKernel.csproj" Id="af0b9d98-81b1-46d8-8e2d-d228aedb8297" />
   <Project Path="docker-compose.dcproj">
     <Build />
   </Project>
   <Project Path="src/MeuSistema.API/MeuSistema.API.csproj" />
   <Project Path="src/MeuSistema.Application/MeuSistema.Application.csproj" />
+  <Project Path="src/MeuSistema.SharedKernel/MeuSistema.SharedKernel.csproj" />
   <Project Path="src/MeuSistema.Domain/MeuSistema.Domain.csproj" />
   <Project Path="src/MeuSistema.Infrastructure/MeuSistema.Infrastructure.csproj" />
   <Project Path="tests/MeuSistema.IntegrationTests/MeuSistema.IntegrationTests/MeuSistema.IntegrationTests.csproj" Id="4001fca2-ef85-4a84-b66d-45ed6fcfc2a6" />
