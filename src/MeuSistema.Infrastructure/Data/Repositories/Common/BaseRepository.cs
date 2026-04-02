@@ -14,7 +14,7 @@ internal abstract class BaseRepository<TEntity, TKey>(AppDbContext dbContext)
             dbcontext
              .Set<TEntity>()
              .AsNoTrackingWithIdentityResolution()
-             .FirstOrDefault(entity => entity.Id.Equals(id)));
+             .FirstOrDefault(entity => entity.Id.Equals(id)))!;
 
     private readonly DbSet<TEntity> _dbSet = dbContext.Set<TEntity>();
     protected readonly AppDbContext DbContext = dbContext;
