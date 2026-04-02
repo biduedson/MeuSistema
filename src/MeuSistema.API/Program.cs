@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 using MeuSistema.API.Extensions;
 using MeuSistema.Infrastructure;
+using MeuSistema.SharedKernel;
 using Microsoft.AspNetCore.Mvc;
 using Scalar.AspNetCore;
 
@@ -23,6 +24,7 @@ namespace MeuSistema.API
            
             // Adicionando os serviços da aplicação no ASP.NET Core DI.
             builder.Services
+                .ConfigureAppSettings()
                 .AddInfrastructure()
                 .AddRepositories()
                 .AddAppDbContext(builder.Environment);
