@@ -9,7 +9,7 @@ namespace MeuSistema.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services
@@ -46,7 +46,7 @@ namespace MeuSistema.API
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
-            app.Run();
+            await  app.RunAppAsync();
         }
     }
 }
