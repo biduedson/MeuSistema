@@ -1,7 +1,5 @@
-﻿
-using MeuSistema.Infrastructure.Data.Context;
+﻿using MeuSistema.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace MeuSistema.API.Extensions
 {
@@ -56,20 +54,37 @@ namespace MeuSistema.API.Extensions
 
             app.Logger.LogInformation("----- {DbName}: verificando migrações pendentes...", dbName);
 
-            // Verifica se existem mudanças de modelo não aplicadas
-            if (dbContext.Database.HasPendingModelChanges())
-            {
-                app.Logger.LogInformation("----- {DbName}: criando e migrando o banco de dados...", dbName);
+            // Lista migrations reais que ainda não foram aplicadas
+            var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
 
-                // Aplica as migrações pendentes
+            if (pendingMigrations.Any())
+            {
+                // Caso existam migrations criadas e não aplicadas
+                app.Logger.LogInformation(
+                    "----- {DbName}: aplicando {Count} migrations pendentes...",
+                    dbName,
+                    pendingMigrations.Count()
+                );
+
                 await dbContext.Database.MigrateAsync();
 
                 app.Logger.LogInformation("----- {DbName}: banco de dados migrado com sucesso!", dbName);
             }
+            else if (dbContext.Database.HasPendingModelChanges())
+            {
+                // Caso o modelo tenha mudado mas nenhuma migration foi criada
+                app.Logger.LogWarning(
+                    "----- {DbName}: houve mudanças no modelo, mas nenhuma migration foi encontrada. Crie uma migration para aplicar essas alterações.",
+                    dbName
+                );
+            }
             else
             {
-                // Caso não haja migrações pendentes
-                app.Logger.LogInformation("----- {DbName}: banco de dados já está atualizado, nenhuma migração pendente.", dbName);
+                // Caso não haja migrations pendentes e o modelo esteja sincronizado
+                app.Logger.LogInformation(
+                    "----- {DbName}: banco de dados já está atualizado, nenhuma migration pendente.",
+                    dbName
+                );
             }
         }
     }
