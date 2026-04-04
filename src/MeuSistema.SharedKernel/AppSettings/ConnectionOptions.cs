@@ -10,5 +10,5 @@ public sealed class ConnectionOptions : IAppOptions
     static string IAppOptions.ConfigSectionPath => "ConnectionStrings";
 
     [Required]
-    public string PostGreeSqlConnection { get; init; } 
+    public string PostGreeSqlConnection { get; private init; } 
 }

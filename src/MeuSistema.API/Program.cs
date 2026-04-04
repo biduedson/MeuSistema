@@ -21,13 +21,13 @@ namespace MeuSistema.API
             builder.Services.AddOpenApi();
             builder.Services.AddControllers();
 
-           
+
             // Adicionando os serviços da aplicação no ASP.NET Core DI.
             builder.Services
                 .ConfigureAppSettings()
                 .AddInfrastructure()
-                .AddRepositories()
-                .AddAppDbContext(builder.Environment);
+                .AddAppDbContext(builder.Environment)
+                .AddRepositories();
 
             var app = builder.Build();
 
