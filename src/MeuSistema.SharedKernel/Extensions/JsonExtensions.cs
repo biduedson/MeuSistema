@@ -2,7 +2,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
-using MeuSistema.Domain.Shared.Utils;
 
 namespace MeuSistema.SharedKernel.Extensions;
 

@@ -1,11 +1,11 @@
-﻿namespace MeuSistema.Domain.Shared.Utils;
+﻿namespace MeuSistema.SharedKernel.Extensions;
 
 public static class GenericTypeExtensions
 {
     public static bool IsDefault<T>(this T value) =>
         Equals(value, default(T));
 
-    public static string GenericTypeName(this object @object)
+    public static string GetGenericTypeName(this object @object)
     {
         var type = @object.GetType();
 

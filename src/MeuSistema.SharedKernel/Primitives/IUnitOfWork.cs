@@ -1,6 +1,6 @@
 
 
-namespace MeuSistema.Application.Interfaces.Persistence;
+namespace MeuSistema.SharedKernel.Primitives;
 
 public interface IUnitOfWork : IDisposable
 {
