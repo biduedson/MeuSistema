@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using MeuSistema.API.Extensions;
+using MeuSistema.Application;
 using MeuSistema.Infrastructure;
 using MeuSistema.SharedKernel;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,7 @@ namespace MeuSistema.API
             builder.Services
                 .ConfigureAppSettings()
                 .AddInfrastructure()
+                .AddCommandHandlers()
                 .AddAppDbContext(builder.Environment)
                 .AddRepositories();
 
