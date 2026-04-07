@@ -1,6 +1,8 @@
-﻿namespace MeuSistema.SharedKernel.Primitives;
+﻿using MediatR;
 
-public abstract class BaseEvent
+namespace MeuSistema.SharedKernel.Primitives;
+
+public abstract class BaseEvent : INotification
 {
     public Guid AggregatedId { get; protected init; }
     public string MessageType { get; protected init; }
