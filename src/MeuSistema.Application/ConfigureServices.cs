@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using MeuSistema.Application.Abstractions;
 using MeuSistema.Application.Behaviors;
@@ -11,39 +10,48 @@ public static class ConfigureServices
 {
     public static IServiceCollection AddCommandHandlers(this IServiceCollection services)
     {
-        var assenbly = Assembly.GetAssembly(typeof(IApplicationMarker));
+        var assembly = typeof(IApplicationMarker).Assembly;
 
         return services
-            .AddValidatorsFromAssembly(assenbly, ServiceLifetime.Singleton)
-            .AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assenbly!)
-                 .AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>)));
+            .AddValidatorsFromAssembly(assembly, ServiceLifetime.Transient)
+            .AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(assembly);
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            });
     }
 }
 
 // ------------------------------------------------------
-// 🔹 EXPLICAÇÃO DETALHADA DO CÓDIGO 🔹
+// 🔹 EXPLICAÇÃO RESUMIDA E CLARA 🔹
 // ------------------------------------------------------
-// 1. using System.Reflection → Permite inspecionar assemblies e localizar classes em tempo de execução.
-// 2. using FluentValidation → Biblioteca para validar objetos (ex.: comandos) com regras claras e reutilizáveis.
-// 3. using MediatR → Implementa o padrão Mediator, que organiza a comunicação entre comandos, queries e eventos.
-// 4. using MeuSistema.Application.Abstractions → Contém a interface IApplicationMarker, usada como "marcador" para localizar o assembly da aplicação.
-// 5. using MeuSistema.Application.Behaviors → Onde está definido o LoggingBehavior, que intercepta requisições.
-// 6. using Microsoft.Extensions.DependencyInjection → Permite registrar serviços na injeção de dependência do .NET.
+// Esse método registra automaticamente os componentes da camada Application no DI.
 //
-// Classe ConfigureServices:
-// - É estática e serve para centralizar a configuração dos serviços da aplicação.
+// 1) IApplicationMarker
+// → Interface vazia usada apenas para localizar o assembly (projeto) correto.
+// → Serve como referência para o .NET saber onde procurar as classes.
 //
-// Método AddCommandHandlers:
-// - É um método de extensão para IServiceCollection, usado na inicialização da aplicação.
-// - Localiza o assembly da aplicação com Assembly.GetAssembly(typeof(IApplicationMarker)).
-// - Registra todos os validadores do FluentValidation encontrados nesse assembly (AddValidatorsFromAssembly).
-// - Registra todos os handlers do MediatR (commands, queries, notifications) com RegisterServicesFromAssembly.
-// - Adiciona o LoggingBehavior ao pipeline do MediatR com AddBehavior.
-//   → O LoggingBehavior funciona como um "middleware interno": antes e depois de cada comando/query,
-//     ele executa lógica de logging (tempo de execução, erros, etc.).
+// 2) Assembly
+// → Representa o projeto compilado (Application).
+// → A partir dele, o sistema consegue escanear e encontrar classes automaticamente.
 //
-// Benefícios:
-// - Código mais limpo: handlers focam apenas na regra de negócio.
-// - Modularidade: comportamentos transversais (logging, validação, etc.) ficam centralizados.
-// - Escalabilidade: fácil adicionar novos behaviors sem alterar os handlers.
+// 3) FluentValidation
+// → AddValidatorsFromAssembly registra todos os validators do projeto.
+// → Evita registrar manualmente cada AbstractValidator<T>.
+//
+// 4) MediatR
+// → RegisterServicesFromAssembly registra automaticamente todos os handlers:
+//    - Commands (IRequest)
+//    - Queries
+//    - Notifications
+//
+// 5) LoggingBehavior
+// → Adicionado ao pipeline do MediatR.
+// → Funciona como um middleware interno:
+//    antes e depois de cada request ele pode executar lógica (log, tempo, erros, etc.)
+//
+// 6) Resultado final
+// → Menos código manual
+// → Mais organização (Clean Architecture / CQRS)
+// → Fácil de escalar e manter
 // ------------------------------------------------------
