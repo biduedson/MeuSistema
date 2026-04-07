@@ -3,7 +3,12 @@ using MeuSistema.SharedKernel.AppSettings;            // Classe ConnectionOption
 using MeuSistema.SharedKernel.Extensions;             // Extensões como GetOptions<T>
 using Microsoft.EntityFrameworkCore;                  // EF Core base
 using Microsoft.EntityFrameworkCore.Diagnostics;       // Eventos e diagnósticos do EF Core
-using Microsoft.Extensions.Logging;                   // Logging
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
+using System;
+// Logging
 
 namespace MeuSistema.API.Extensions;
 

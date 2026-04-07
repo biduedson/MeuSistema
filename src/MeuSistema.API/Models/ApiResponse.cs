@@ -1,4 +1,7 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Http;
 
 namespace MeuSistema.API.Models;
 
@@ -31,6 +34,8 @@ public class ApiResponse
 
     public static ApiResponse BadRequest(string errorMessage) =>
         new() { Success = false, StatusCode = StatusCodes.Status400BadRequest, Errors = CreateErrors(errorMessage) };
+    public static ApiResponse BadRequest(IEnumerable<ApiErrorResponse> errors) =>
+        new() { Success = false, StatusCode = StatusCodes.Status400BadRequest, Errors = errors };
 
     public static ApiResponse Unauthorized() =>
         new() { Success = false, StatusCode = StatusCodes.Status401Unauthorized };
@@ -52,6 +57,9 @@ public class ApiResponse
 
     public static ApiResponse NotFound(string errorMessage) =>
         new() { Success = false, StatusCode = StatusCodes.Status404NotFound, Errors = CreateErrors(errorMessage) };
+
+    public static ApiResponse NotFound(IEnumerable<ApiErrorResponse> errors) =>
+      new() { Success = false, StatusCode = StatusCodes.Status404NotFound, Errors = errors };
 
     public static ApiResponse InternalServerError(string errorMessage) =>
         new() { Success = false, StatusCode = StatusCodes.Status500InternalServerError, Errors = CreateErrors(errorMessage) };

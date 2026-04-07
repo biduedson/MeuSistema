@@ -1,9 +1,13 @@
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using MeuSistema.API.Extensions;
 using MeuSistema.Application;
 using MeuSistema.Infrastructure;
 using MeuSistema.SharedKernel;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Scalar.AspNetCore;
 
 namespace MeuSistema.API
