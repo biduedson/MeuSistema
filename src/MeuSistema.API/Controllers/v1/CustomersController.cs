@@ -7,6 +7,7 @@ using MediatR;
 using MeuSistema.API.Extensions;
 using MeuSistema.API.Models;
 using MeuSistema.Application.Customer.Commands;
+using MeuSistema.Application.Customer.Queries.GetByIdCustomer;
 using MeuSistema.Application.Customer.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,4 +38,14 @@ public class CustomersController(IMediator mediator): ControllerBase
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete([Required] Guid id) =>
         (await mediator.Send(new DeleteCustomerCommand(id))).ToActionResult();
+
+    [HttpGet("{id:guid}")]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ApiResponse<GetByIdCustomerResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetById([Required] Guid id) =>
+        (await mediator.Send(new GetByIdCustomerQuery(id))).ToActionResult();
+
 }
