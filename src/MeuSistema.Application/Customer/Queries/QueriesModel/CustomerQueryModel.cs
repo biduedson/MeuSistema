@@ -1,8 +1,37 @@
 ﻿
 
+using MeuSistema.Application.Abstractions;
+
 namespace MeuSistema.Application.Customer.Queries.QueriesModel;
 
-public class CustomerQueryModel
+public class CustomerQueryModel : IQueryModel<Guid>
 {
+    public CustomerQueryModel(
+        Guid id,
+        string firstName,
+        string lastName,
+        string gender,
+        string email,
+        DateTime dateOfBirth
+        )
+    {
+        Id= id;
+        FirstName = firstName;
+        LastName = lastName;
+        Gender = gender;
+        Email = email;
+        DateOfBirth = dateOfBirth;
+
+    }
+
+    private CustomerQueryModel() { }
+
+    public Guid Id { get; private init ; }    
+    public string FirstName { get; private init; } 
+    public string LastName { get; private init; }
+    public string Gender { get; private init; }
+    public string Email { get; private init; }
+    public DateTime DateOfBirth { get; private init; }
+
 
 }
