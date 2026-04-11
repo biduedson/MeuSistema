@@ -7,7 +7,7 @@ using MeuSistema.Application.Customer.Responses;
 using MeuSistema.Domain.Entities.CustumerAggregate;
 
 
-namespace MeuSistema.Application.Customer.Queries.GetByIdCustomer;
+namespace MeuSistema.Application.Customer.Queries.GetCustomers;
 
 public class GetByIdCustomerQueryHandler(
     IValidator<GetByIdCustomerQuery> validator,
