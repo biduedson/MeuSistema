@@ -2,10 +2,9 @@
 
 using MeuSistema.SharedKernel.Primitives;
 
-namespace MeuSistema.Application.Customer.Responses
+namespace MeuSistema.Application.Customer.Responses;
+
+public class CreatedCustomerResponse(Guid id) : IResponse
 {
-   public class CreatedCustomerResponse(Guid id) : IResponse
-    {
-        public Guid Id { get; } = id;
-    }
+    public Guid Id { get; } = id;
 }

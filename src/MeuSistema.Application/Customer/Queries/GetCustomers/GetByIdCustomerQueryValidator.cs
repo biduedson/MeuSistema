@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace MeuSistema.Application.Customer.Queries.GetByIdCustomer;
+namespace MeuSistema.Application.Customer.Queries.GetCustomers;
 
 public class GetByIdCustomerQueryValidator : AbstractValidator<GetByIdCustomerQuery>
 {

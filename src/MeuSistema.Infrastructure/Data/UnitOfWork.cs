@@ -84,7 +84,7 @@ internal sealed class UnitOfWork(
         IReadOnlyList<EventStore> eventStores)
     {
         if (domainEvents.Count > 0)
-            await Task.WhenAll(domainEvents.Select(@event => mediator.Publish(@event)));
+           await Task.WhenAll(domainEvents.Select(@event => mediator.Publish(@event)));
 
         if (domainEvents.Count > 0)
             await eventStoreRepository.StoreAsync(eventStores);

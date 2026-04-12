@@ -13,7 +13,7 @@
         { 
         }
 
-        public Guid Id { get; private init; } = new Guid();
+        public Guid Id { get; private init; } = Guid.NewGuid();
         public string Data { get; private init; }  
     }
 }
