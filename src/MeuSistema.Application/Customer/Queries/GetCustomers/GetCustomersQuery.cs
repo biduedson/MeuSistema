@@ -1,8 +1,10 @@
 ﻿using Ardalis.Result;
 using MediatR;
-using MeuSistema.Application.Customer.Queries.QueriesModel;
+using MeuSistema.Application.Customer.Responses;
 
-public class GetCustomersQuery : IRequest<Result<IEnumerable<CustomerQueryModel>>>;
+namespace MeuSistema.Application.Customer.Queries.GetCustomers;
+
+public class GetCustomersQuery : IRequest<Result<GetCustomersResponse>>;
 
 // -----------------------------------------
 // 🔹 EXPLICAÇÃO DETALHADA 🔹

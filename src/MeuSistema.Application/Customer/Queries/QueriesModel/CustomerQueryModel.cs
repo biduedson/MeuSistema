@@ -1,50 +1,33 @@
-﻿
-
-using MeuSistema.Application.Abstractions;
+﻿using MeuSistema.SharedKernel.Primitives;
 
 namespace MeuSistema.Application.Customer.Queries.QueriesModel;
 
-public class CustomerQueryModel : IQueryModel<Guid>
-{
-    public CustomerQueryModel(
-        Guid id,
-        string firstName,
-        string lastName,
-        string gender,
-        string email,
-        DateTime dateOfBirth
-        )
-    {
-        Id= id;
-        FirstName = firstName;
-        LastName = lastName;
-        Gender = gender;
-        Email = email;
-        DateOfBirth = dateOfBirth;
-
-    }
-
-    private CustomerQueryModel() { }
-
-    public Guid Id { get; private init ; }    
-    public string FirstName { get; private init; } 
-    public string LastName { get; private init; }
-    public string Gender { get; private init; }
-    public string Email { get; private init; }
-    public DateTime DateOfBirth { get; private init; }
+public record CustomerQueryModel(
+        Guid Id,
+        string FirstName,
+        string LastName,
+        string Gender,
+        string Email,
+        DateTime DateOfBirth
+        ) : IQueryModel<Guid>;
 
 
-}
+
 
 // -----------------------------------------
 // 🔹 EXPLICAÇÃO DETALHADA 🔹
 // -----------------------------------------
 
 /*
-✅ Classe CustomerQueryModel → Representa o modelo de dados retornado pelas consultas (queries) relacionadas a clientes.
+✅ CustomerQueryModel → Representa o modelo de dados retornado pelas consultas (queries) relacionadas a clientes.
 ✅ Implementação de IQueryModel<Guid> → Define um contrato genérico para modelos de consulta, garantindo consistência e reutilização.
-✅ Construtor público → Permite inicializar o objeto com todos os atributos necessários de forma explícita.
-✅ Construtor privado → Necessário para compatibilidade com EF Core, que exige um construtor sem parâmetros para materialização.
-✅ Propriedades com init-only → Garantem imutabilidade após a inicialização, reforçando segurança e previsibilidade dos dados.
-✅ Arquitetura CQRS → Separa claramente os modelos de leitura (query models) dos modelos de escrita (entities), facilitando manutenção e escalabilidade.
+✅ Sendo um record → Por baixo dos panos é uma class, mas com:
+   - Construtor primário gerado automaticamente.
+   - Propriedades init-only (imutabilidade após inicialização).
+   - Comparação por valor (== compara conteúdo, não referência).
+   - Método Deconstruct gerado automaticamente.
+✅ Uso em CQRS → Ideal para QueryModels e DTOs, pois são objetos de dados simples, previsíveis e comparáveis.
+✅ Arquitetura → Separa claramente os modelos de leitura (query models) dos modelos de escrita (entities), facilitando manutenção e escalabilidade.
+⚠️ Observação → Se o ORM (EF Core/Mongo) precisar materializar diretamente esse modelo, é mais seguro usar class. 
+   No seu caso atual, como a conversão é feita manualmente no handler, record funciona perfeitamente.
 */

@@ -1,5 +1,4 @@
-﻿
-namespace MeuSistema.Application.Abstractions;
+﻿namespace MeuSistema.SharedKernel.Primitives;
 
 public interface IQueryModel;
 

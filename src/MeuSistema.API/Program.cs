@@ -48,7 +48,7 @@ namespace MeuSistema.API
                 });
 
             }
-
+            app.UseErrorHanDling(); 
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
