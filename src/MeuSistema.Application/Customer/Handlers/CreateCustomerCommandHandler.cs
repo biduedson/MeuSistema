@@ -8,6 +8,8 @@ using MeuSistema.Domain.Entities.CustumerAggregate;
 using MeuSistema.Domain.ValueObjects;
 using MeuSistema.SharedKernel.Primitives;
 
+namespace MeuSistema.Application.Customer.Handlers;
+
 public class CreateCustomerCommandHandler(
     IValidator<CreateCustomerCommand> validator,
     ICustomerRepository repository,
