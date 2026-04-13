@@ -16,8 +16,18 @@ internal class CustomerRepository(AppDbContext dbContext)
                 .AsNoTracking()
                 .Any(customer => customer.Email.Address == email));
 
+    private static readonly Func<AppDbContext, string, Guid, Task<bool>> ExistsByEmailAndIdCompiledAsync =
+        EF.CompileAsyncQuery((AppDbContext dbContext, string email, Guid id) =>
+             dbContext
+                 .Customers
+                 .AsNoTracking()
+                 .Any(customer => customer.Email.Address == email && customer.Id != id )
+        );  
     public Task<bool> ExistsByEmailAsync(Email email) =>
         ExistsByEmailCompiledAsync(DbContext, email.Address);
+
+    public Task<bool> ExistsByEmailAsync(Email email, Guid currentId) =>
+        ExistsByEmailAndIdCompiledAsync(DbContext, email.Address, currentId);
 }
 
 /*
@@ -35,14 +45,27 @@ internal class CustomerRepository(AppDbContext dbContext)
    - `AsNoTracking()` → consulta sem rastreamento, ideal para verificações simples de existência.  
    - `Any(customer => customer.Email.Address == email)` → retorna `true` se existir algum cliente com o e-mail informado.  
 
-3. `ExistsByEmailAsync(Email email)`  
+3. `ExistsByEmailAndIdCompiledAsync`  
+   - Também usa `EF.CompileAsyncQuery`, mas agora com dois parâmetros: `email` e `id`.  
+   - A consulta verifica se existe **algum outro cliente** com o mesmo e-mail, excluindo o cliente cujo `Id` foi informado (`customer.Id != id`).  
+   - Útil em cenários de atualização: garante que o e-mail não esteja sendo usado por outro cliente diferente do atual.
+
+4. `ExistsByEmailAsync(Email email)`  
    - Método público que recebe um `ValueObject` `Email`.  
    - Internamente chama a query compilada (`ExistsByEmailCompiledAsync`) passando o `DbContext` e o endereço de e-mail.  
    - Retorna um `Task<bool>` indicando se o cliente existe ou não.
 
+5. `ExistsByEmailAsync(Email email, Guid currentId)`  
+   - Método público que recebe um `Email` e o `Guid` do cliente atual.  
+   - Internamente chama a query compilada (`ExistsByEmailAndIdCompiledAsync`).  
+   - Retorna `true` se **outro cliente** já estiver usando o mesmo e-mail.  
+   - Evita duplicidade em cenários de atualização, permitindo que o cliente atual mantenha seu e-mail sem conflito.
+
 ---
 
 ✅ Em resumo:  
-Esse `CustomerRepository` é um repositório especializado que, além dos métodos básicos herdados do `BaseRepository`, adiciona uma operação específica: verificar se já existe um cliente com determinado e-mail.  
+Esse `CustomerRepository` é um repositório especializado que, além dos métodos básicos herdados do `BaseRepository`, adiciona operações específicas para verificar existência de clientes por e-mail.  
+- `ExistsByEmailAsync` → verifica se já existe algum cliente com o e-mail.  
+- `ExistsByEmailAsync(email, currentId)` → garante que nenhum outro cliente além do atual esteja usando o e-mail (útil em updates).  
 O uso de `EF.CompileAsyncQuery` garante performance, e `AsNoTracking` evita overhead desnecessário, já que não há necessidade de rastrear entidades em uma simples verificação de existência.
 */
