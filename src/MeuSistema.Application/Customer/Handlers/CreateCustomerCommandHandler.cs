@@ -30,7 +30,7 @@ public class CreateCustomerCommandHandler(
         if (await repository.ExistsByEmailAsync(email))
             return Result<CreatedCustomerResponse>.Error("O endereço de e-mail informado já está em uso.");
 
-        var customer = Customer.Create(
+        var customer =  Domain.Entities.CustumerAggregate.Customer.Create(
             request.FirstName,
             request.LastName,
             request.Gender,
