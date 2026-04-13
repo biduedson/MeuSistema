@@ -15,17 +15,23 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
         
         RuleFor(command => command.FirstName)
             .NotEmpty()
-            .MaximumLength(100);
+                .WithMessage("O nome do cliente é obrigatório.")
+            .MaximumLength(100)
+                 .WithMessage("O nome do cliente deve ter no máximo 100 caracteres.");
 
-        
+
         RuleFor(command => command.LastName)
             .NotEmpty()
-            .MaximumLength(100);
+               .WithMessage("O sobrenome do cliente é obrigatório.")
+            .MaximumLength(100)
+               .WithMessage("O sobrenome do cliente deve ter no máximo 100 caracteres.");
 
-        
         RuleFor(command => command.Email)
             .NotEmpty()
-            .MaximumLength(254)
-            .EmailAddress();
+               .WithMessage("O email do cliente é obrigatório.")
+            .EmailAddress()
+               .WithMessage("O email do cliente deve ser um endereço de email válido.")
+            .MaximumLength(200)
+               .WithMessage("O email do cliente deve ter no máximo 200 caracteres.");
     }
 }

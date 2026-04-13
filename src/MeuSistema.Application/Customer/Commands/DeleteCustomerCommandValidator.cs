@@ -9,7 +9,9 @@ public class DeleteCustomerCommandValidator :AbstractValidator<DeleteCustomerCom
     public DeleteCustomerCommandValidator()
     {
         RuleFor(command => command.Id)
-            .NotEmpty();
+            .NotEmpty().WithMessage("O ID do cliente é obrigatório.")
+            .Must(id => Guid.TryParse(id.ToString(), out _))
+            .WithMessage("O ID do cliente deve ser um GUID válido.");
     }
 }
 
