@@ -4,6 +4,7 @@ using MeuSistema.API.Extensions;
 using MeuSistema.Application;
 using MeuSistema.Infrastructure;
 using MeuSistema.SharedKernel;
+using MeuSistema.SharedKernel.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,13 +13,15 @@ using Scalar.AspNetCore;
        
             var builder = WebApplication.CreateBuilder(args);
             builder.Services
-            .Configure<JsonOptions>(jsonOptions =>
-            {
-            jsonOptions.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-            });
-
+                  .Configure<JsonOptions>(jsonOptions => jsonOptions.JsonSerializerOptions.Configure());
+            
             builder.Services.AddOpenApi();
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                 .ConfigureApiBehaviorOptions( behaiorOptions =>
+                 {
+                     behaiorOptions.SuppressMapClientErrors = true;
+                     behaiorOptions.SuppressModelStateInvalidFilter = true;
+                 }).AddJsonOptions(_ => { });
 
 
             // Adicionando os serviços da aplicação no ASP.NET Core DI.
