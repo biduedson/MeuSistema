@@ -34,13 +34,13 @@ jobs:
           dotnet-version: "9.0.x"
 
       - name: Restore dependencies
-        run: dotnet restore MeuSistema.sln
+        run: dotnet restore MeuSistema.slnx
 
       - name: Build
-        run: dotnet build MeuSistema.sln --nologo --no-restore --configuration Release
+        run: dotnet build MeuSistema.slnx --nologo --no-restore --configuration Release
 
       - name: Test
-        run: dotnet test MeuSistema.sln --nologo --no-build --no-restore --configuration Release --verbosity minimal
+        run: dotnet test MeuSistema.slnx --nologo --no-build --no-restore --configuration Release --verbosity minimal
 
 
 # ----------------------------------------------------------------------
