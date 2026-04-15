@@ -4,7 +4,7 @@ using Ardalis.Result;
 using MediatR;
 using MeuSistema.Application.Customer.Responses;
 
-namespace MeuSistema.Application.Customer.Queries.GetByIdCustomer;
+namespace MeuSistema.Application.Customer.Queries.GetCustomers;
 
 public class GetByIdCustomerQuery(Guid id) : IRequest<Result<GetByIdCustomerResponse>> 
 {
