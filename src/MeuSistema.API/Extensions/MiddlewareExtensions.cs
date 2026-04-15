@@ -9,6 +9,8 @@ internal static class MiddlewareExtensions
         builder.UseMiddleware<ErrorHandlingMiddleware>();
 }
 
+
+
 // ------------------------------------------------------
 // 🔹 EXPLICAÇÃO RESUMIDA E CLARA 🔹
 // ------------------------------------------------------
