@@ -11,6 +11,9 @@ internal static class MiddlewareExtensions
 
 
 
+
+
+
 // ------------------------------------------------------
 // 🔹 EXPLICAÇÃO RESUMIDA E CLARA 🔹
 // ------------------------------------------------------
