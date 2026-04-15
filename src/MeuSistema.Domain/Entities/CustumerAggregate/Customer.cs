@@ -32,13 +32,20 @@ public class Customer : BaseEntity, IAggregateRoot
 
     public static Customer Create(string firstName, string lastName, EGender gender, string email, DateTime dateOfBirth)
     {
-        if(string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
-            throw new ValidationException("First name and last name cannot be empty.");
+        {
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+                throw new ValidationException("Nome e sobrenome não podem ser vazios.");
 
-        var emailCreated =  Email.Create(email);
+            var emailCreated = Email.Create(email);
 
-        return new Customer(firstName, lastName, gender, emailCreated, dateOfBirth);
+            if (dateOfBirth > DateTime.Now.AddYears(-18))
+                throw new ValidationException("O cliente deve ter pelo menos 18 anos.");
+
+            return new Customer(firstName, lastName, gender, emailCreated, dateOfBirth);
+        }
+
     }
+
     public void ChangeEmail(string newEmail)
     {
         if (Email.Address.Equals(newEmail, StringComparison.OrdinalIgnoreCase)) return;
