@@ -15,6 +15,7 @@ public class DeleteCustomerCommandValidator :AbstractValidator<DeleteCustomerCom
     }
 }
 
+
 // -----------------------------------------
 // 🔹 EXPLICAÇÃO DO CÓDIGO 🔹
 // -----------------------------------------
