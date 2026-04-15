@@ -44,7 +44,7 @@ public class CustomerTests
             ));
         var act = () => customerFaker.Generate();
 
-        act.Should().Throw<ValidationException>()
+        act.Should().Throw<MeuSistema.Domain.Exceptions.ValidationException>()
             .WithMessage("O cliente deve ter pelo menos 18 anos.");
     }
 
@@ -63,7 +63,7 @@ public class CustomerTests
                 DateTime.Now.AddYears(-20)     
             );
 
-            act.Should().Throw<ValidationException>()
+            act.Should().Throw<MeuSistema.Domain.Exceptions.ValidationException>()
             .WithMessage("Nome e sobrenome não podem ser vazios.");
     }
 
