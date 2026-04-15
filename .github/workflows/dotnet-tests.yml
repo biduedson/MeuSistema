@@ -1,0 +1,84 @@
+name: .NET Build and Test
+
+on:
+  push:
+    branches: [develop]
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [master]
+    paths-ignore:
+      - ".github/workflows/**"
+      - "**/*.md"
+      - "**/*.yml"
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+
+jobs:
+  build-and-test:
+    name: build-and-test-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore MeuSistema.slnx
+
+      - name: Build
+        run: dotnet build MeuSistema.slnx --nologo --no-restore --configuration Release
+
+      - name: Test
+        run: dotnet test MeuSistema.slnx --nologo --no-build --no-restore --configuration Release --verbosity minimal
+
+
+# ----------------------------------------------------------------------
+# 📌 🔹 Explicação detalhada da usabilidade
+# ----------------------------------------------------------------------
+
+# ✅ 1️⃣ Nome do workflow
+# 🔹 "name" define como aparece na aba Actions do GitHub.
+
+# ✅ 2️⃣ Disparo automático
+# 🔹 "on" configura quando o workflow roda:
+#     - push na branch develop
+#     - pull request para master
+#     - ignora mudanças em arquivos .md, .yml e na própria pasta workflows.
+
+# ✅ 3️⃣ Variáveis de ambiente
+# 🔹 Evitam logs desnecessários, desativam telemetria e aceleram execução.
+
+# ✅ 4️⃣ Job principal
+# 🔹 "jobs" define o que será feito. Aqui temos "build-and-test".
+
+# ✅ 5️⃣ Matrix de sistemas operacionais
+# 🔹 Roda em paralelo em Ubuntu, Windows e macOS para garantir compatibilidade.
+
+# ✅ 6️⃣ Passos do job
+# 🔹 checkout → baixa o código do repositório
+# 🔹 setup-dotnet → instala SDK .NET 9.0
+# 🔹 restore → baixa dependências
+# 🔹 build → compila em modo Release
+# 🔹 test → executa testes unitários com saída mínima
+
+# ✅ 7️⃣ Proteção contra código quebrado
+# 🔹 Se os testes falharem, o workflow marca o PR como falho e bloqueia merge.
+
+# ✅ 8️⃣ Extensibilidade
+# 🔹 Pode ser expandido para incluir deploy, publicação de pacotes ou outras etapas.
+
+# ----------------------------------------------------------------------
+# 🔥 Workflow funcional e totalmente documentado dentro do arquivo! 🚀✨
+# Quem abrir esse .yml vai entender claramente cada parte e por que ela existe.
+# ----------------------------------------------------------------------
