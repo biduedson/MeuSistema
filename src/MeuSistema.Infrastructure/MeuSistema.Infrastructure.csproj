@@ -21,4 +21,9 @@
     <ProjectReference Include="..\MeuSistema.SharedKernel\MeuSistema.SharedKernel.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="MeuSistema.UnitTests" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
+
 </Project>
