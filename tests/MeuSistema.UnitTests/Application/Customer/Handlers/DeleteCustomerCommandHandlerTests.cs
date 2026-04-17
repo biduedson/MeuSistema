@@ -15,9 +15,11 @@ using MeuSistema.UnitTests.Fixtures;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using NSubstitute;
+using Xunit.Categories;
 
 namespace MeuSistema.UnitTests.Application.Customer.Handlers;
 
+[UnitTest]
 public class DeleteCustomerCommandHandlerTests(EfSqliteFixture fixture) : IClassFixture<EfSqliteFixture>
 {
     private readonly DeleteCustomerCommandValidator _validator = new();
