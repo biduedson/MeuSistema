@@ -24,12 +24,10 @@ public class CreateCustomerCommandValidator : AbstractValidator<CreateCustomerCo
                 .WithMessage("O email do cliente é obrigatório.")
             .EmailAddress()
                 .WithMessage("O email do cliente deve ser um endereço de email válido.")
-            .MaximumLength(200)
-                .WithMessage("O email do cliente deve ter no máximo 200 caracteres.");
+            .MaximumLength(254)
+                .WithMessage("O email do cliente deve ter no máximo 254 caracteres");
 
         RuleFor(command => command.BirthDate)
-            .NotEmpty()
-                .WithMessage("A data de nascimento é obrigatória.")
             .LessThan(DateTime.Now)
                 .WithMessage("A data de nascimento deve estar no passado.");
     }

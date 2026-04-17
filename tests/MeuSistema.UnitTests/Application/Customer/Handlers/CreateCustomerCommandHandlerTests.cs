@@ -1,0 +1,149 @@
+﻿
+
+using Ardalis.Result;
+using Bogus;
+using FluentAssertions;
+using MediatR;
+using MeuSistema.Application.Customer.Commands;
+using MeuSistema.Application.Customer.Handlers;
+using MeuSistema.Domain.Entities.CustumerAggregate;
+using MeuSistema.Infrastructure.Data;
+using MeuSistema.Infrastructure.Data.Repositories;
+using MeuSistema.SharedKernel.Primitives;
+using MeuSistema.UnitTests.Fixtures;
+using Microsoft.Extensions.Logging;
+using NSubstitute;
+using Xunit.Categories;
+
+namespace MeuSistema.UnitTests.Application.Customer.Handlers;
+
+[UnitTest]
+public class CreateCustomerCommandHandlerTests(EfSqliteFixture fixture) : IClassFixture<EfSqliteFixture>
+{
+    private readonly CreateCustomerCommandValidator _validator = new();
+
+    [Fact]
+    public async Task Add_ValidCommand_ShouldReturnsCreatedResult()
+    {
+
+        var command = new Faker<CreateCustomerCommand>()
+            .RuleFor(command => command.FirstName, faker => faker.Person.FirstName)
+            .RuleFor(command => command.LastName, faker => faker.Person.LastName)
+            .RuleFor(command => command.Gender, faker => faker.PickRandom<EGender>())
+            .RuleFor(command => command.Email, faker => faker.Person.Email.ToLowerInvariant())
+            .RuleFor(command => command.BirthDate, faker => faker.Person.DateOfBirth)
+            .Generate();
+
+        var unitOfWork = new UnitOfWork(
+            fixture.Context,
+            Substitute.For<IEventStoreRepository>(),
+            Substitute.For<IMediator>(),
+            Substitute.For<ILogger<UnitOfWork>>());
+
+        var handler = new CreateCustomerCommandHandler(
+        _validator,
+        new CustomerRepository (fixture.Context),
+        unitOfWork);
+
+        var act = await handler.Handle(command, CancellationToken.None);
+
+        act.Should().NotBeNull();
+        act.IsCreated().Should().BeTrue();
+        act.Value.Should().NotBeNull();
+        act.Value.Id.Should().NotBe(Guid.Empty);
+    }
+
+    [Fact]
+    public async Task Add_DuplicateEmailCommand_ShouldReturnsFailResult()
+    {
+        var command = new Faker<CreateCustomerCommand>()
+            .RuleFor(command => command.FirstName, faker => faker.Person.FirstName)
+            .RuleFor(command => command.LastName, faker => faker.Person.LastName)
+            .RuleFor(command => command.Gender, faker => faker.PickRandom<EGender>())
+            .RuleFor(command => command.Email, faker => faker.Person.Email.ToLowerInvariant())
+            .RuleFor(command => command.BirthDate, faker => faker.Person.DateOfBirth)
+            .Generate();
+
+        var repository = new CustomerRepository(fixture.Context);
+        var customer = MeuSistema.Domain.Entities.CustumerAggregate.Customer.Create(
+            command.FirstName,
+            command.LastName,
+            command.Gender,
+            command.Email,
+            command.BirthDate);
+
+        repository.Add(customer);
+
+        await fixture.Context.SaveChangesAsync();
+        fixture.Context.ChangeTracker.Clear();
+
+        var handler = new CreateCustomerCommandHandler(
+            _validator,
+            repository,
+            Substitute.For<IUnitOfWork>());
+
+        var act = await handler.Handle(command, CancellationToken.None);
+
+        act.Should().NotBeNull();
+        act.IsSuccess.Should().BeFalse();
+        act.Errors.Should()
+            .NotBeNullOrEmpty()
+            .And.OnlyHaveUniqueItems()
+            .And.Contain(errorMessage => errorMessage == "O endereço de e-mail informado já está em uso.");
+
+    }
+
+    [Fact]
+    public async Task Add_InvalidCommand_ShouldReturnsFailResult()
+    {
+        
+        var handler = new CreateCustomerCommandHandler(
+            _validator,
+            Substitute.For<ICustomerRepository>(),
+            Substitute.For<IUnitOfWork>());
+
+        
+        var act = await handler.Handle(new CreateCustomerCommand(), CancellationToken.None);
+
+      
+        act.Should().NotBeNull();
+        act.IsSuccess.Should().BeFalse();
+        act.ValidationErrors.Should().NotBeNullOrEmpty().And.OnlyHaveUniqueItems();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Explicação detalhada dos testes de CreateCustomerCommandHandler:
+//
+// • Add_ValidCommand_ShouldReturnsCreatedResult
+//   - Cenário feliz: cria um comando válido com dados de cliente e executa.
+//   - Asserts:
+//       act.Should().NotBeNull(); → o resultado não deve ser nulo.
+//       act.IsCreated().Should().BeTrue(); → a operação deve ter criado o cliente.
+//       act.Value.Should().NotBeNull(); → o objeto retornado (cliente) não deve ser nulo.
+//       act.Value.Id.Should().NotBe(Guid.Empty); → o cliente criado deve ter um Id válido.
+//
+// • Add_DuplicateEmailCommand_ShouldReturnsFailResult
+//   - Cenário de erro de negócio: tenta criar um cliente com email já existente.
+//   - Asserts:
+//       act.Should().NotBeNull(); → o resultado não deve ser nulo.
+//       act.IsSuccess.Should().BeFalse(); → a operação deve ter falhado.
+//       act.Errors.Should().NotBeNullOrEmpty() → deve haver mensagens de erro.
+//       .And.OnlyHaveUniqueItems() → não pode haver mensagens duplicadas.
+//       .And.Contain(errorMessage => errorMessage == "O endereço de e-mail informado já está em uso.");
+//         → deve conter exatamente essa mensagem de erro.
+//
+// • Add_InvalidCommand_ShouldReturnsFailResult
+//   - Cenário de erro de validação: o comando é inválido (sem dados preenchidos).
+//   - Asserts:
+//       act.Should().NotBeNull(); → o resultado não deve ser nulo.
+//       act.IsSuccess.Should().BeFalse(); → a operação deve ter falhado.
+//       act.ValidationErrors.Should().NotBeNullOrEmpty() → deve haver erros de validação.
+//       .And.OnlyHaveUniqueItems() → não pode haver mensagens duplicadas.
+//
+// -----------------------------------------------------------------------------
+// Em resumo:
+// - O primeiro teste cobre SUCESSO (cliente criado corretamente).
+// - O segundo cobre ERRO DE NEGÓCIO (email duplicado).
+// - O terceiro cobre ERRO DE VALIDAÇÃO (comando inválido).
+// -----------------------------------------------------------------------------
