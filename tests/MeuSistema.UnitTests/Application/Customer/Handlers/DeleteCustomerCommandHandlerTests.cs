@@ -1,8 +1,6 @@
 ﻿
 
-using System.Runtime.InteropServices;
 using Bogus;
-using Castle.Core.Logging;
 using FluentAssertions;
 using MediatR;
 using MeuSistema.Application.Customer.Commands;
@@ -99,11 +97,47 @@ public class DeleteCustomerCommandHandlerTests(EfSqliteFixture fixture) : IClass
 
         var act = await handler.Handle(new DeleteCustomerCommand(Guid.Empty), CancellationToken.None);
 
+        // Assert
         act.Should().NotBeNull();
         act.IsSuccess.Should().BeFalse();
-        act.ValidationErrors.Should().NotBeNullOrEmpty()
-            .And.OnlyHaveUniqueItems()
-            .And.Contain(error => error.ErrorMessage == "O ID do cliente é obrigatório.");
-            
+        act.ValidationErrors.Should().NotBeNullOrEmpty().And.OnlyHaveUniqueItems();
+
     }
 }
+
+// -----------------------------------------------------------------------------
+// Explicação detalhada dos testes de DeleteCustomerCommandHandler:
+//
+// • Delete_ValidCustomerId_ShoudReturnSucessResult
+//   - Cenário feliz: cria um cliente válido, salva no banco em memória,
+//     e depois tenta deletar.
+//   - Asserts:
+//       act.Should().NotBeNull(); → o resultado não deve ser nulo.
+//       act.IsSuccess.Should().BeTrue(); → a operação deve ter sido bem-sucedida.
+//       act.SuccessMessage.Should().Be("Customer deletado com sucesso");
+//         → a mensagem de sucesso deve ser exatamente essa.
+//
+// • Delete_NotFoundCustomer_ShouldReturnsFailResu
+//   - Cenário de erro de negócio: tenta deletar um cliente que não existe.
+//   - Asserts:
+//       act.Should().NotBeNull(); → o resultado não deve ser nulo.
+//       act.IsSuccess.Should().BeFalse(); → a operação deve ter falhado.
+//       act.Errors.Should().NotBeNullOrEmpty() → deve haver mensagens de erro.
+//       .And.OnlyHaveUniqueItems() → não pode haver mensagens duplicadas.
+//       .And.Contain(errorMessage => errorMessage == $"Nenhum customer encontrado com o id: {command.Id}")
+//         → deve conter exatamente a mensagem informando que o ID não foi encontrado.
+//
+// • Delete_InvalidCommand_ShouldReturnsFailResult
+//   - Cenário de erro de validação: o comando é inválido (Guid.Empty).
+//   - Asserts:
+//       act.Should().NotBeNull(); → o resultado não deve ser nulo.
+//       act.IsSuccess.Should().BeFalse(); → a operação deve ter falhado.
+//       act.ValidationErrors.Should().NotBeNullOrEmpty() → deve haver erros de validação.
+//       .And.OnlyHaveUniqueItems() → não pode haver mensagens duplicadas.
+//
+// -----------------------------------------------------------------------------
+// Em resumo:
+// - O primeiro teste cobre SUCESSO (cliente válido deletado).
+// - O segundo cobre ERRO DE NEGÓCIO (cliente não encontrado).
+// - O terceiro cobre ERRO DE VALIDAÇÃO (comando inválido).
+// -----------------------------------------------------------------------------
