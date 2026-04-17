@@ -111,3 +111,45 @@ public class CreateCustomerCommandHandlerTests(EfSqliteFixture fixture) : IClass
         act.ValidationErrors.Should().NotBeNullOrEmpty().And.OnlyHaveUniqueItems();
     }
 }
+
+// -----------------------------------------
+// 🔹 COMENTÁRIOS EXPLICATIVOS 🔹
+// -----------------------------------------
+
+/*
+Bibliotecas usadas:
+- Ardalis.Result → fornece um tipo de retorno padronizado (Success, Fail, Created).
+- Bogus → gera dados falsos realistas (nomes, e-mails, datas).
+- FluentAssertions → facilita escrever asserções nos testes com sintaxe fluida.
+- MediatR → usado para publicar eventos de domínio.
+- NSubstitute → cria objetos falsos (mocks) para testes.
+- Xunit.Categories → categoriza testes (ex: [UnitTest]).
+
+Classe de teste:
+- CreateCustomerCommandHandlerTests → testa o comportamento do handler que cria clientes.
+- Usa EfSqliteFixture → cria um banco SQLite em memória para simular persistência.
+
+Teste 1: Add_ValidCommand_ShouldReturnsCreatedResult
+- Cria um comando válido com dados falsos (Bogus).
+- Instancia UnitOfWork e CustomerRepository.
+- Executa o handler.
+- Verifica que o resultado não é nulo, foi criado com sucesso e o cliente tem Id válido.
+
+Teste 2: Add_DuplicateEmailCommand_ShouldReturnsFailResult
+- Cria um comando com e-mail falso.
+- Adiciona manualmente um cliente com o mesmo e-mail no banco.
+- Salva e limpa o ChangeTracker.
+- Executa o handler com o comando duplicado.
+- Verifica que o resultado falhou, retornou erros e contém a mensagem "O endereço de e-mail informado já está em uso."
+
+Teste 3: Add_InvalidCommand_ShouldReturnsFailResult
+- Cria o handler com mocks.
+- Executa o handler com um comando vazio (sem dados).
+- Verifica que o resultado falhou e retornou erros de validação.
+
+Resumo:
+- Esses testes garantem que o handler de criação de clientes:
+  1. Cria corretamente quando os dados são válidos.
+  2. Bloqueia criação quando o e-mail já existe.
+  3. Retorna falha quando os dados são inválidos.
+*/
