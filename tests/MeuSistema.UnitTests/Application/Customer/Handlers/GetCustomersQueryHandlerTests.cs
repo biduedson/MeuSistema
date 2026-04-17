@@ -70,9 +70,6 @@ public class GetCustomersQueryHandlerTests(EfSqliteFixture fixture) : IClassFixt
     }
 
 }
-
-}
-
 // -----------------------------------------------------------------------------
 // Explicação detalhada dos testes de GetCustomersQueryHandler:
 //
