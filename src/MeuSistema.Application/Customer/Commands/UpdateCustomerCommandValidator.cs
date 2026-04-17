@@ -10,17 +10,15 @@ public class UpdateCustomerCommandValidator : AbstractValidator<UpdateCustomerCo
     {
         RuleFor(command => command.Id)
             .NotEmpty()
-               .WithMessage("O Id do cliente é obrigatório.")
-            .Must(id => Guid.TryParse(id.ToString(), out _))
-               .WithMessage("O ID do cliente deve ser um GUID válido.");
+               .WithMessage("O Id do cliente é obrigatório.");
 
         RuleFor(command => command.Email)
             .NotEmpty()
                .WithMessage("O email do cliente é obrigatório.")
             .EmailAddress()
                .WithMessage("O email do cliente deve ser um endereço de email válido.")
-            .MaximumLength(200)
-               .WithMessage("O email do cliente deve ter no máximo 200 caracteres.");
+            .MaximumLength(254)
+               .WithMessage("O email do cliente deve ter no máximo 254 caracteres.");
     }
 }
 /*

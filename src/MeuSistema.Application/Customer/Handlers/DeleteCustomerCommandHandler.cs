@@ -9,7 +9,7 @@ using MeuSistema.SharedKernel.Primitives;
 
 namespace MeuSistema.Application.Customer.Handlers;
 
-internal class DeleteCustomerCommandHandler(
+public class DeleteCustomerCommandHandler(
     IValidator<DeleteCustomerCommand> validator,
     ICustomerRepository repository,
     IUnitOfWork unitOfWork
