@@ -13,7 +13,7 @@ public static class ConfigureServices
         var assembly = typeof(IApplicationMarker).Assembly;
 
         return services
-            .AddValidatorsFromAssembly(assembly, ServiceLifetime.Transient)
+            .AddValidatorsFromAssembly(assembly, ServiceLifetime.Singleton)
             .AddMediatR(cfg =>
             {
                 cfg.RegisterServicesFromAssembly(assembly);
