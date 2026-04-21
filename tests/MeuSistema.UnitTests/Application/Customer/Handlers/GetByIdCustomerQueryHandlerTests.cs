@@ -3,8 +3,9 @@
 using Bogus;
 using FluentAssertions;
 using MediatR;
+using MeuSistema.Application.Abstractions;
 using MeuSistema.Application.Customer.Queries.GetCustomers;
-using MeuSistema.Application.Customer.Responses;
+using MeuSistema.Application.Customer.Queries.QueriesModel;
 using MeuSistema.Domain.Entities.CustumerAggregate;
 using MeuSistema.Infrastructure.Data;
 using MeuSistema.Infrastructure.Data.Repositories;
@@ -47,7 +48,7 @@ public class GetByIdCustomerQueryHandlerTests(EfSqliteFixture fixture) : IClassF
 
         var queryHandler = new GetByIdCustomerQueryHandler(
             _validator,
-            new CustomerRepository(fixture.Context));
+            new CustomerReadOnlyRepository(fixture.Context));
 
         var query = new GetByIdCustomerQuery(customer.Id);
 
@@ -56,7 +57,7 @@ public class GetByIdCustomerQueryHandlerTests(EfSqliteFixture fixture) : IClassF
 
         act.Should().NotBeNull();
         act.IsSuccess.Should().BeTrue();
-        act.Value.Should().BeOfType<GetByIdCustomerResponse>();
+        act.Value.Should().BeOfType<CustomerQueryModel>();
 
     }
 
@@ -68,7 +69,7 @@ public class GetByIdCustomerQueryHandlerTests(EfSqliteFixture fixture) : IClassF
 
         var queryHandler = new GetByIdCustomerQueryHandler(
             _validator,
-            new CustomerRepository(fixture.Context)
+            new CustomerReadOnlyRepository(fixture.Context)
             );
         var act = await queryHandler.Handle(query, CancellationToken.None);
 
@@ -84,7 +85,7 @@ public class GetByIdCustomerQueryHandlerTests(EfSqliteFixture fixture) : IClassF
     {
         var queryHandler = new GetByIdCustomerQueryHandler(
             _validator,
-           Substitute.For<ICustomerRepository>()
+           Substitute.For<ICustomerReadOnlyRepository>()
             );
         var act = await queryHandler.Handle(new GetByIdCustomerQuery(Guid.Empty), CancellationToken.None);
 
