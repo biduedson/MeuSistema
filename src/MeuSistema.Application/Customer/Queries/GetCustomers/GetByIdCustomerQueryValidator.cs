@@ -7,9 +7,8 @@ public class GetByIdCustomerQueryValidator : AbstractValidator<GetByIdCustomerQu
     public GetByIdCustomerQueryValidator()
     {
         RuleFor(query => query.Id)
-            .NotEmpty().WithMessage("O ID do cliente é obrigatório.")
-            .Must(id => Guid.TryParse(id.ToString(), out _))
-            .WithMessage("O ID do cliente deve ser um GUID válido.");
+            .NotEmpty().WithMessage("O ID do cliente é obrigatório.");
+           
     }
 }
 

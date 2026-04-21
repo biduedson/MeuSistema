@@ -1,4 +1,5 @@
-﻿using MeuSistema.Domain.Entities.CustumerAggregate;
+﻿using MeuSistema.Application.Abstractions;
+using MeuSistema.Domain.Entities.CustumerAggregate;
 using MeuSistema.Infrastructure.Data;
 using MeuSistema.Infrastructure.Data.Context;
 using MeuSistema.Infrastructure.Data.Repositories;
@@ -20,6 +21,7 @@ public static class ConfigureServices
     public static IServiceCollection AddRepositories(this IServiceCollection services) =>
         services
             .AddScoped<ICustomerRepository, CustomerRepository>()
+            .AddScoped<ICustomerReadOnlyRepository, CustomerReadOnlyRepository>()
             .AddScoped<IEventStoreRepository, EventStoreRepository>()
             .AddScoped<IUnitOfWork, UnitOfWork>();  
 }

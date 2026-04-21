@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MeuSistema.Application\MeuSistema.Application.csproj" />
     <ProjectReference Include="..\MeuSistema.Domain\MeuSistema.Domain.csproj" />
     <ProjectReference Include="..\MeuSistema.SharedKernel\MeuSistema.SharedKernel.csproj" />
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using MeuSistema.API.Extensions;
 using MeuSistema.API.Models;
 using MeuSistema.Application.Customer.Commands;
 using MeuSistema.Application.Customer.Queries.GetCustomers;
+using MeuSistema.Application.Customer.Queries.QueriesModel;
 using MeuSistema.Application.Customer.Responses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +52,7 @@ public class CustomersController(IMediator mediator): ControllerBase
 
     [HttpGet("{id:guid}")]
     [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(ApiResponse<GetByIdCustomerResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<CustomerQueryModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
@@ -58,7 +60,7 @@ public class CustomersController(IMediator mediator): ControllerBase
         (await mediator.Send(new GetByIdCustomerQuery(id))).ToActionResult();
 
     [HttpGet]
-    [ProducesResponseType(typeof(ApiResponse<GetCustomersResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiResponse<IReadOnlyList<GetByIdCustomerQuery>>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAll() =>
        (await mediator.Send(new GetCustomersQuery())).ToActionResult();
