@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MeuSistema.Infrastructure.Data.Repositories;
 
 internal class CustomerRepository(AppDbContext dbContext)
-    : BaseRepository<Customer, Guid>(dbContext), ICustomerRepository
+    : BaseWriteOnlyRepository<Customer, Guid>(dbContext), ICustomerRepository
 {
     private static readonly Func<AppDbContext, string, Task<bool>> ExistsByEmailCompiledAsync =
         EF.CompileAsyncQuery((AppDbContext dbContext, string email) =>
