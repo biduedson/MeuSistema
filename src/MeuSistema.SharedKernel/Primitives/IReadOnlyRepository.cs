@@ -6,5 +6,6 @@ public interface IReadOnlyRepository<TQueryModel, in TKey>
     where TKey : IEquatable<TKey>
 {
     Task<TQueryModel?> GetByIdAsync(TKey id);
-  
+    Task<IReadOnlyList<TQueryModel>> GetAllAsync();
+
 }
