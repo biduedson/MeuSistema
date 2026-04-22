@@ -4,7 +4,7 @@ using MeuSistema.SharedKernel.Primitives;
 
 namespace MeuSistema.Domain.Entities.CustumerAggregate;
 
-public interface ICustomerRepository : IRepository<Customer, Guid>
+public interface ICustomerRepository : IWriteRepository<Customer, Guid>
 {
     Task<bool> ExistsByEmailAsync(Email email);
 
